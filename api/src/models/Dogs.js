@@ -26,6 +26,10 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true
     },
+    img: {
+      type: DataTypes.TEXT,
+      defaultValue: 'https://pixabay.com/static/uploads/photo/2013/07/12/17/50/caution-152540_640.png',
+    },
     inDB: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

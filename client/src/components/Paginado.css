@@ -1,0 +1,41 @@
+.Paginado-Btn {
+    width: 40px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 3px;
+    margin: 2px;
+    cursor: pointer;
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+
+.Paginado-Btn:hover {
+    background-position: 100% 0;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.Paginado-BtnNextPrev {
+    width: 90px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 3px;
+    margin: 2px;
+    cursor: pointer;
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+
+.Paginado-BtnNextPrev:hover {
+    background-position: 100% 0;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}

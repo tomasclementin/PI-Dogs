@@ -1,0 +1,166 @@
+.Create {
+    background-image: url('https://www.bunko.pet/__export/1627170246327/sites/debate/img/2021/07/24/doberman_crop1627170200836.jpeg_888470977.jpeg');
+    background-size: cover;
+    position: absolute;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+}
+
+.CreationForm {
+    display: flex;
+    /* flex-direction: column; */
+    align-items:baseline;
+    justify-content: space-around;
+}
+
+.Form {
+    display: flex;
+    height: auto;
+    padding: 10px;
+    border: 3px solid #29323c;
+    border-radius: 15px;
+    /* color: white; */
+    background-color: transparent;
+    /* justify-content:flex-end; */
+    align-items: center;
+    /* background: linear-gradient(to bottom, #29323c, #485563); */
+}
+
+.Creation-FormElement{
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    justify-content: space-between;
+    /* padding-right: none; */
+}
+
+.Creation-Label {
+    color: white;
+    background: linear-gradient(to bottom, #29323c, #485563);
+    border-radius: 8px;
+    /* border: 1px solid #29323c; */
+    padding: 4px;
+    margin: 1px;
+    margin-right: 8px;
+    font-size: medium;
+}
+
+.Creation-Input {
+    border-radius: 7px;
+    border: none;
+    /* padding: 10px; */
+    /* margin-right: 10px; */
+}
+
+.Form-Errors {
+    display: flex;
+    align-items: center;
+    background-color: red;
+    color: white;
+    height: 40px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: 8px;
+    border-radius: 8px;
+}
+
+.Creation-Btn {
+    margin-top: 10px;
+    padding: 4px;
+    /* background: linear-gradient(to right, #29323c, #485563); */
+    color: white;
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+    width: 100px;
+    cursor: pointer;
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+
+.Creation-Btn:hover{
+    background-position: 100% 0;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.Form-Preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30%;
+    margin-top: 20px;
+    padding: 10px;
+    border: 3px solid #29323c;
+    border-radius: 15px;
+    /* color: white; */
+    background-color: transparent;
+}
+
+.Preview-Div {
+   display: flex;
+   flex-direction: column;
+   align-items: center; 
+}
+
+.Preview-H {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    background: linear-gradient(to bottom, #29323c, #485563);
+    border-radius: 8px;
+    padding: 4px;
+    margin: 5px;
+    margin-right: 8px;
+    font-size: medium;
+    color: white;
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+}
+
+.Preview-Tempers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1px;
+    /* -ms-grid-column-align: center; */
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    align-items: center;
+    width: 100%;
+}
+
+.Preview-Temper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.Preview-Btn {
+    background: linear-gradient(to bottom, #b41919, #ff0000);
+    border: none;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+}
+
+.Preview-h4 {
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* text-justify: center; */
+    /* width: fit-content; */
+    background: linear-gradient(to bottom, #358927, #30d60b);
+    border-radius: 8px;
+    padding: 4px;
+    margin: 5px;
+    margin-right: 8px;
+    font-size: small;
+    color: white;
+}

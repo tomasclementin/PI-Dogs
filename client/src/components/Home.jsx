@@ -2,7 +2,10 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
-import { getAllDogs, getAllTempers, searchByName } from '../actions';
+import { getAllDogs, getAllTempers, searchByName, orderByOrigin, orderByTemper, orderByAlphabet, orderByWeight, filterByLife } from '../actions';
+import Paginado from './Paginado';
+import NavBar from './NavBar';
+import './Home.css';
 
 export default function Home () {
 
@@ -12,8 +15,18 @@ export default function Home () {
     const [input, setInput] = useState({
         name: ''
     });
+    const [orden, setOrden] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [dogsPerPage, setDogsPerPage] = useState(8);
+    const indexOfLastDog = currentPage * dogsPerPage;
+    const indexOfFirstDog = indexOfLastDog - dogsPerPage;
+    const currentDogs = dogs.slice(indexOfFirstDog, indexOfLastDog);
 
-    function handleChange(e){
+    function paginado(pageNumber) {
+        setCurrentPage(pageNumber);
+    };
+
+    function handleInput(e){
         e.preventDefault();
         setInput({name: e.target.value});
     };
@@ -21,6 +34,33 @@ export default function Home () {
     function handleClick(e){
         e.preventDefault();
         dispatch(searchByName(input.name));
+        setCurrentPage(1);
+    };
+
+    function handleOrderByOrigin(e){
+        e.preventDefault();
+        dispatch(orderByOrigin(e.target.value));
+        setCurrentPage(1);
+    };
+
+    function handleOrderByTemper(e){
+        e.preventDefault();
+        dispatch(orderByTemper(e.target.value));
+        setCurrentPage(1);
+    };
+
+    function handleOrderByAlphabet(e){
+        e.preventDefault();
+        dispatch(orderByAlphabet(e.target.value));
+        setOrden(`Ordenado segun ${e.target.value}`);
+        setCurrentPage(1);
+    };
+
+    function handleOrderByWeight(e){
+        e.preventDefault();
+        dispatch(orderByWeight(e.target.value));
+        setOrden(`Ordenado segun ${e.target.value}`);
+        setCurrentPage(1);
     };
 
     useEffect(() => {
@@ -29,46 +69,70 @@ export default function Home () {
     }, [dispatch]);
 
     return (
-        <div>
-            <input type='text' placeholder='Buscar por nombre...' name='name'
-                value={input.name} onChange={e => handleChange(e)}></input>
-            <button onClick={e => handleClick(e)}>Buscar</button>
-            <select>
-                <option value='All'>Todas las razas</option>
-                <option value='Api'>Existentes</option>
-                <option value='Created'>Creadas</option>
-            </select>
-            <select>
-                <option>Filtrar por temperamento</option>
-                {
-                tempers && tempers.map(t => (
-                    <option key={t.id} value={t.name}>{t.name}</option>
-                ))
-                }
-            </select>
-            <select>
-                <option value='Unordered'>Sin orden</option>
-                <option value='Asc'>A-Z</option>
-                <option vlaue='Desc'>Z-A</option>
-            </select>
-            <select>
-                <option value='Peso+'>Peso +</option>
-                <option value='Peso-'>Peso -</option>
-            </select>
+        <div className='Home'>
             <div>
-                <h1>Dogs</h1>
+            <NavBar/>
+            <div className='Home-Headers'>
+                <div className='Home-SearchBar'>
+                    <input className='SearchBar' type='text' placeholder='Search by name...'
+                        name='name' value={input.name} onChange={e => handleInput(e)}></input>
+                    <button className='SearchBar-Btn' onClick={e => handleClick(e)}>Search</button>
+                </div>
+                <div className='Home-Selects'>
+                    <select className='Home-Select' onChange={e => handleOrderByOrigin(e)}>
+                        <option value='All'>All races</option>
+                        <option value='Api'>Existent</option>
+                        <option value='Created'>Created</option>
+                    </select>
+                    <select className='Home-Select' onChange={e => handleOrderByTemper(e)}>
+                        <option value='All'>All temperaments</option>
+                        <option value='No temper'>Undefined temperament</option>
+                        {
+                        tempers && tempers.map(t => (
+                            <option key={t.id} value={t.name}>{t.name}</option>
+                        ))
+                        }
+                    </select>
+                    <select className='Home-Select' onChange={e => handleOrderByAlphabet(e)}>
+                        <option value='Asc'>A-Z</option>
+                        <option value='Desc'>Z-A</option>
+                    </select>
+                    <select className='Home-Select' onChange={e => handleOrderByWeight(e)}>
+                        <option value='Unordered'>Weight: unordered</option>
+                        <option value='Peso+'>Weight +</option>
+                        <option value='Peso-'>Weight -</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <div>
+                <Paginado 
+                    dogsPerPage = {dogsPerPage}
+                    allDogs = {dogs.length}
+                    paginado = {paginado}
+                    currentPage = {currentPage}
+                />
+                </div>
+                <div className='HomeDiv-H1'>
+                    <h1 className='Home-H1'>Dogs</h1>
+                </div>
+                <div className='Cards'>
                 {
-                    dogs && dogs.map(d => (
-                        <div key={d.id}>
-                            <Link to={`/dogs/${d.id}`}>
-                                <h1>{d.name}</h1>
+                    currentDogs && currentDogs.map(d => (
+                        <div className='Card' key={d.id}>
+                            <Link className='CardLink' to={`/dogs/${d.id}`}>
+                                <h1 className='CardLink-h1'>{d.name}</h1>
                             </Link>
-                            <img src={d.img} alt='imagen!' width='400px'/>
-                            <h3>{d.temper}</h3>
-                            <h3>{d.weight} kg</h3>
+                            <img src={d.img}
+                                alt='imagen!'  className='CardImg'/>
+                            {d.tempers ? ( d.tempers[0].name !== 'No temper' ? <h3 className='Home-h'>{d.tempers[0].name}</h3> : null)
+                                : (d.temper ? <h3 className='Home-h'>{d.temper}</h3> : null)}
+                            <h3 className='Home-h'>{d.weight} lb</h3>
                         </div>
                     ))
                 }
+                </div>
+            </div>
             </div>
         </div>
     )

@@ -2,6 +2,8 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDogDetails } from '../actions';
+import NavBar from './NavBar';
+import './DogDetails.css';
 
 export default function DogDetails (props) {
 
@@ -10,22 +12,28 @@ export default function DogDetails (props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getDogDetails(id))
+        dispatch(getDogDetails(id));
     },[dispatch, id]);
 
     return (
-        <div>
+        <div className='DogDetails'>
+            <NavBar/>
+            <div className='DogDetail'>
             {
                 dogDetails.length && 
-                <div>
-                    <h1>{dogDetails[0].name}</h1>
-                    <img src={dogDetails[0].img} alt='imagen!' width='450px'/>
-                    <h3>Temperamento: {dogDetails[0].temper}.</h3>
-                    <h3>Altura: {dogDetails[0].height} cm.</h3>
-                    <h3>Peso: {dogDetails[0].weight} Kg.</h3>
-                    <h3>Expectativa de vida: {dogDetails[0].yearsOld.replace('years', 'años')}.</h3>
+                <div className='Card'>
+                    <h1 className='Card-h'>{dogDetails[0].name}</h1>
+                    <img className='Card-Img' src={dogDetails[0].img ? dogDetails[0].img : 'https://pixabay.com/static/uploads/photo/2013/07/12/17/50/caution-152540_640.png'}
+                        alt='imagen!' width='450px'/>
+                    <h3 className='Card-h'>Temperament: {dogDetails[0].tempers ? dogDetails[0].tempers[0].name
+                        : (dogDetails[0].temper ? dogDetails[0].temper : 'Undefined temperament')}.</h3>
+                    <h3 className='Card-h'>Height: {dogDetails[0].height} cm.</h3>
+                    <h3 className='Card-h'>Weight: {dogDetails[0].weight} lb.</h3>
+                    <h3 className='Card-h'>Life span: {typeof dogDetails[0].yearsOld === 'string' ?
+                        dogDetails[0].yearsOld : dogDetails[0].yearsOld + ' years'}.</h3>
                 </div>
             }
+            </div>
         </div>
     )
 };

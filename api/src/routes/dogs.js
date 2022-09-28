@@ -16,11 +16,11 @@ router.get('/', async (req, res, next) => {
                 img: e.image.url,
                 name: e.name,
                 temper: e.temperament,
-                weight: e.weight.metric
+                weight: e.weight.imperial,
             };
         });
         const allDogsDb = await Dogs.findAll({
-            attributes: ['id', 'name', 'weight', 'inDB'],
+            attributes: ['id', 'name', 'weight', 'img', 'inDB'],
             include: {
                 model: Temper,
                 attributes: ['name'],
@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
             };
         });
         const dogByNameDb = await Dogs.findAll({
-            where: {name: name.toLocaleLowerCase()},
+            where: {name: name.toLowerCase()},
             attributes: ['name']
         });
         res.json(dogByNameApiFiltered.concat(dogByNameDb));
@@ -56,7 +56,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     try{
-        if(typeof parseInt(id) === 'number') {
+        if(id.length < 5) {
             console.log('entro al primer if');
             const allDogsFromApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
             var dogByIdApi = await allDogsFromApi.data.filter(e => e.id === parseInt(id))
@@ -71,16 +71,17 @@ router.get('/:id', async (req, res) => {
                 };
             });
         }
-        if(typeof parseInt(id) === 'NaN') {
+        if(id.length > 5) {
             console.log('entro al if');
             const dogByIdDb = await Dogs.findByPk(id, {
-                attributes: ['name', 'height', 'weight', 'yearsOld'],
+                attributes: ['name', 'height', 'weight', 'yearsOld', 'img'],
                 include: {
                     model: Temper,
                     attributes: ['name']
                 }
             });
-            return res.json(dogByIdApi.concat(dogByIdDb));
+            const dogByIdDbArr = [dogByIdDb];
+            return res.json(dogByIdDbArr);
         }
         res.json(dogByIdApi);
     } catch(e) {
@@ -94,7 +95,7 @@ router.post('/', async (req, res) => {
     try {
         if(!name || !height || !weight || !yearsOld) return res.status(404).send('Faltan datos obligatorios');
         const newDog = await Dogs.create(req.body);
-        const newTemper = await newDog.createTemper({name: req.body.temper});
+        const newTemper = await newDog.createTemper({name: req.body.temper.join(', ')});
         res.send('Perro creado con éxito!');
     } catch (e) {
         console.log(e.message);
